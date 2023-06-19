@@ -52,7 +52,7 @@ void frameDelay() {
 }
 
 //Initialization of libraries and such
-int gameSetup(void) {
+void gameSetup() {
 	if (sprites_init() == 0) {return 1;}
     gfx_Begin();
 	gfx_SetDrawBuffer();

@@ -11,4 +11,8 @@ void renderScr();
 void getInput();
 void playerAnim();
 void frameDelay();
-int gameSetup();
+void gameSetup();
+
+//framerate stuffz
+#define TARGET_FRAMERATE 30
+#define TARGET_FRAME_TIME (CLOCKS_PER_SEC / TARGET_FRAMERATE)

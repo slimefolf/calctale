@@ -8,12 +8,7 @@
 #include <keypadc.h>
 #include <time.h>
 #include "func.c"
-#include "vars.h"
 #include "gfx/sprites.h"
-
-//framerate stuffz
-#define TARGET_FRAMERATE 30
-#define TARGET_FRAME_TIME (CLOCKS_PER_SEC / TARGET_FRAMERATE)
 
 //main stuffz
 int main(void) {
