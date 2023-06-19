@@ -2,6 +2,10 @@
 Undertale for the TI-84+ CE.
 This is an unofficial port of Undertale for the TI-84+ CE graphing calculator.
 
+Unafilliated with Toby Fox or the Undertale development team
+
+All properties are owned by Toby Fox, and this is simply a fan work to get it in the hands of bored students
+
 
 ### Feature checklist
 - ~~walking~~
