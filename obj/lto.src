@@ -1,0 +1,321 @@
+	section	.text,"ax",@progbits
+	assume	adl = 1
+	section	.text,"ax",@progbits
+	public	_sprites_init
+_sprites_init:
+	ld	hl, -6
+	call	__frameset
+	ld	hl, _.str
+	ld	de, _.str.1
+	push	de
+	push	hl
+	call	_ti_Open
+	ld	e, a
+	pop	hl
+	pop	hl
+	or	a, a
+	ld	a, 0
+	jr	z, BB0_5
+	ld	(ix - 3), de
+	push	de
+	call	_ti_GetDataPtr
+	pop	de
+	ld	de, (_sprites_appvar)
+	or	a, a
+	sbc	hl, de
+	ld	(ix - 6), hl
+	ld	de, 12
+	ld	iy, 0
+BB0_2:
+	lea	hl, iy
+	or	a, a
+	sbc	hl, de
+	jr	z, BB0_4
+	lea	bc, iy
+	lea	de, iy
+	ld	iy, _sprites_appvar
+	add	iy, bc
+	ld	hl, (iy)
+	ld	bc, (ix - 6)
+	add	hl, bc
+	ld	(iy), hl
+	push	de
+	pop	iy
+	ld	de, 3
+	add	iy, de
+	ld	de, 12
+	jr	BB0_2
+BB0_4:
+	ld	hl, (ix - 3)
+	push	hl
+	call	_ti_Close
+	pop	hl
+	ld	a, 1
+BB0_5:
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_main
+_main:
+	call	_sprites_init
+	or	a, a
+	jr	nz, BB1_2
+	ld	hl, 1
+	ret
+BB1_2:
+	call	_gfx_Begin
+	ld	hl, 1
+	push	hl
+	call	_gfx_SetDraw
+	pop	hl
+	ld	hl, (_sprites_appvar)
+	ld	de, 0
+	push	de
+	ld	de, 12
+	push	de
+	push	hl
+	call	_gfx_SetPalette
+	pop	hl
+	pop	hl
+	pop	hl
+BB1_3:
+	call	_getInput
+	call	_renderScr
+	call	_frameDelay
+	ld	hl, (_inGame)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jr	z, BB1_3
+	call	_gfx_End
+	or	a, a
+	sbc	hl, hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_getInput
+_getInput:
+	call	_kb_Scan
+	ld	hl, -720868
+	push	de
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	l, e
+	ld	h, d
+	pop	de
+	ld	a, l
+	bit	6, a
+	jr	z, BB2_2
+	or	a, a
+	sbc	hl, hl
+	ld	(_inGame), hl
+BB2_2:
+	ld	bc, 1
+	ld	hl, -720866
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	a, e
+	or	a, a
+	jr	nz, BB2_4
+	ld	(_animPhase), bc
+	or	a, a
+	sbc	hl, hl
+	ld	(_animTimer), hl
+	ret
+BB2_4:
+	ld	(_playerDir), bc
+	call	_playerAnim
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_renderScr
+_renderScr:
+	ld	hl, 1
+	push	hl
+	call	_gfx_FillScreen
+	pop	hl
+	ld	hl, (_playerDir)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jr	nz, BB3_3
+	ld	de, (_animPhase)
+	dec	de
+	ld	bc, 3
+	push	de
+	pop	hl
+	or	a, a
+	sbc	hl, bc
+	jr	nc, BB3_3
+	ld	iy, _switch.table.renderScr
+	ld	bc, 3
+	ex	de, hl
+	call	__imulu
+	push	hl
+	pop	de
+	add	iy, de
+	ld	hl, (iy)
+	ld	hl, (hl)
+	ld	de, 105
+	push	de
+	ld	de, 150
+	push	de
+	push	hl
+	call	_gfx_TransparentSprite
+	pop	hl
+	pop	hl
+	pop	hl
+BB3_3:
+	jp	_gfx_SwapDraw
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_frameDelay
+_frameDelay:
+	ld	hl, -4
+	call	__frameset
+	call	_clock
+	ld	(ix - 3), hl
+	ld	(ix - 4), e
+	call	_clock
+BB4_1:
+	call	_clock
+	ld	bc, (ix - 3)
+	ld	a, (ix - 4)
+	call	__lsub
+	ld	bc, 1092
+	xor	a, a
+	call	__lcmpu
+	jr	c, BB4_1
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_playerAnim
+_playerAnim:
+	ld	iy, 0
+	ld	bc, (_animTimer)
+	ld	de, 30
+	push	bc
+	pop	hl
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	ld	de, 7
+	jp	p, BB5_4
+	push	bc
+	pop	hl
+	dec	hl
+	or	a, a
+	sbc	hl, de
+	jr	nc, BB5_3
+	ld	hl, 2
+	push	bc
+	pop	iy
+	jr	BB5_7
+BB5_3:
+	push	bc
+	pop	iy
+BB5_4:
+	ld	bc, -16
+	ld	hl, (_animPhase)
+	add	hl, bc
+	or	a, a
+	sbc	hl, de
+	jr	c, BB5_6
+	ld	hl, 1
+	jr	BB5_7
+BB5_6:
+	ld	hl, 3
+BB5_7:
+	ld	(_animPhase), hl
+	inc	iy
+	ld	(_animTimer), iy
+	ret
+	section	.text,"ax",@progbits
+
+	section	.rodata,"a",@progbits
+	private	_.str
+_.str:
+	db	"sprites", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.1
+_.str.1:
+	db	"r", 0
+
+	section	.data,"aw",@progbits
+	public	_inGame
+_inGame:
+	dl	1
+
+	section	.bss,"aw",@nobits
+	public	_playerX
+_playerX:
+	rb	3
+
+	section	.bss,"aw",@nobits
+	public	_playerY
+_playerY:
+	rb	3
+
+	section	.data,"aw",@progbits
+	public	_playerDir
+_playerDir:
+	dl	1
+
+	section	.bss,"aw",@nobits
+	public	_animTimer
+_animTimer:
+	rb	3
+
+	section	.data,"aw",@progbits
+	public	_animPhase
+_animPhase:
+	dl	1
+
+	section	.data,"aw",@progbits
+	public	_sprites_appvar
+_sprites_appvar:
+	dl	0
+	dl	12
+	dl	565
+	dl	1118
+
+	section	.rodata,"a",@progbits
+	private	_switch.table.renderScr
+_switch.table.renderScr:
+	dl	_sprites_appvar+3
+	dl	_sprites_appvar+6
+	dl	_sprites_appvar+9
+
+	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6c61664110f888c0285ae4c48b150c9a7a4361bb)"
+	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6c61664110f888c0285ae4c48b150c9a7a4361bb)"
+	extern	__Unwind_SjLj_Register
+	extern	__frameset
+	extern	_gfx_Begin
+	extern	_kb_Scan
+	extern	__lsub
+	extern	_gfx_SetPalette
+	extern	_ti_Close
+	extern	_gfx_SwapDraw
+	extern	_gfx_SetDraw
+	extern	__setflag
+	extern	_gfx_FillScreen
+	extern	__Unwind_SjLj_Unregister
+	extern	__imulu
+	extern	_ti_Open
+	extern	_ti_GetDataPtr
+	extern	_gfx_End
+	extern	__lcmpu
+	extern	_clock
+	extern	_gfx_TransparentSprite

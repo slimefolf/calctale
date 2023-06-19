@@ -1,0 +1,82 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A9A5           123h
+.init.libs       D1A9A5 D1A9FD            58h
+.libs            D1A9FD D1AA50            53h
+.init.clock      D1AA50 D1AA6B            1Bh
+.init.reruncheck D1AA6B D1AA6B             0h
+.init            D1AA6B D1AA92            27h
+.fini            D1AA92 D1AAC6            34h
+.text            D1AAC6 D1AD13           24Dh
+.data            D1AD13 D1AD28            15h
+.rodata          D1AD28 D1AD5D            35h
+.init_array      000000 000000             0h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D052C9 D13FD8      3h
+.header          D1A87F D1A882             3h
+
+Label                        Value
+--------------------------   ------
+___low_bss                 = D052C6
+___len_bss                 = 000003
+___heaptop                 = D13FD8
+___heapbot                 = D052C9
+___libs                    = D1A9FD
+___init_array_count        = 000000
+___ctors_count             = 000000
+___dtors_count             = 000000
+___fini_array_count        = 000000
+__stack                    = D1A87E
+__frameset                 = D1AAC6
+__imulu                    = 000158
+__lcmpu                    = 0001AC
+__lsub                     = 0001F8
+__ftol                     = 00027C
+__ftoul                    = 00027C
+__ltof                     = 000284
+__setflag                  = 000218
+__ultof                    = 000280
+_atomic_load_increasing_32 = D1AAD4
+_os_DisableHomeTextBuffer  = D1AAF9
+_os_EnableHomeTextBuffer   = D1AB0B
+_clock                     = D1AB1D
+.missingappvar             = D1AD28
+.libloadname               = D1AD2D
+.libloadnamelen            = 000007
+.webaddress                = D1AD35
+___init_clock              = D1AA50
+__start                    = D1AA6B
+___exithl                  = D1AA92
+skip._exit                 = D1AA92
+skip.__Exit                = D1AA92
+skip._abort                = D1AA92
+_exit.sp                   = D1AA93
+_exit.flash_wait_states    = D1AA9D
+_sprites_init              = D1AB28
+_main                      = D1ABA1
+_getInput                  = D1ABF2
+_renderScr                 = D1AC33
+_frameDelay                = D1AC88
+_playerAnim                = D1ACBC
+_.str                      = D1AD4A
+_.str.1                    = D1AD52
+_inGame                    = D1AD13
+_playerDir                 = D1AD16
+_animTimer                 = D052C6
+_animPhase                 = D1AD19
+_sprites_appvar            = D1AD1C
+_switch.table.renderScr    = D1AD54
+lib.LibLoad                = D1A9FD
+_#ti_Open                  = D1AA11
+_#ti_Close                 = D1AA15
+_#ti_GetDataPtr            = D1AA19
+_#gfx_Begin                = D1AA26
+_#gfx_End                  = D1AA2A
+_#gfx_SetPalette           = D1AA2E
+_#gfx_FillScreen           = D1AA32
+_#gfx_SetDraw              = D1AA36
+_#gfx_SwapDraw             = D1AA3A
+_#gfx_TransparentSprite    = D1AA3E
+_#kb_Scan                  = D1AA4C

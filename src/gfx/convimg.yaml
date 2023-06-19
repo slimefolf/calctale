@@ -1,0 +1,25 @@
+palettes:
+  - name: global_palette
+    fixed-entries:
+      - color: {index: 0, r: 255, g: 0, b: 255}
+      - color: {index: 1, r: 0, g: 0, b: 0}
+    images: automatic
+
+converts:
+  - name: sprites
+    palette: global_palette
+    transparent-color-index: 0
+    images:
+     - assets/frisk/friskIdleDn.png
+     - assets/frisk/friskWalkDn1.png
+     - assets/frisk/friskWalkDn2.png
+
+outputs:
+  - type: appvar
+    name: sprites
+    include-file: sprites.h
+    source-format: c
+    palettes:
+      - global_palette
+    converts:
+      - sprites
