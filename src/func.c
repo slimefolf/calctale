@@ -4,7 +4,7 @@
 #include <keypadc.h>
 #include <time.h>
 #include "gfx/sprites.h"
-#include "vars.h"
+#include "vars.c"
 
 //Gets the input from the keypad
 void getInput() {
@@ -41,20 +41,4 @@ void playerAnim() {
 	else if ((animPhase >= 16) && (animPhase <= 22)) {animPhase = 3;}
 	else {animPhase = 1;}
 	animTimer = animTimer + 1;
-}
-
-//The delay used to cap the framerate (about 30fps)
-void frameDelay() {
-	//frame cap stuff
-	clock_t frame_start = clock();
-	clock_t frame_time = clock() - frame_start;
-	do {frame_time = clock() - frame_start;} while (frame_time < TARGET_FRAME_TIME);
-}
-
-//Initialization of libraries and such
-void gameSetup() {
-	if (sprites_init() == 0) {return 1;}
-    gfx_Begin();
-	gfx_SetDrawBuffer();
-    gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 }
