@@ -10,4 +10,3 @@ extern int animPhase;
 extern void renderScr();
 extern void getInput();
 extern void playerAnim();
-

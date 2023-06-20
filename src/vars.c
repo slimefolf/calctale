@@ -1,5 +1,5 @@
 //variable initialization
-
+#include "vars.h"
 
 //libraries
 #include <ti/getcsc.h>
